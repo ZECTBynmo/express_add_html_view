@@ -1,14 +1,54 @@
 {   "image": "", 
-    "name": "",
+    "name": "express-add-html-view",
     "version": "0.0.0",                                                   
     "github": {                                                           
-        "user": "",                                              
-        "repo": ""
+        "user": "ZECTBynmo",                                              
+        "repo": "express_add_html_view"
     }, 
 
+    "functions": "leto/overrides.js",
     "procedure": [
+
+        // Generate the view html and js
         {   "title": "",
-            "type": "",
+            "type": "template",
+
+            "sourcedir": "leto/templates",
+            "templates": [
+                {   "name": "EmptyView", 
+                    "dest": "public/tpl/~~name~~.html"
+                },
+                {   "name": "ViewJS", 
+                    "dest": "public/js/views/~~name~~.js"
+                }
+            ]
         },
-    ]
+
+        {   "title": "",
+            "type": "change", 
+
+            "ruleset": "leto/rules.js",
+            "changes": [
+                {   "rule": "insertAfterFinding",
+                    "file": "public/js/main.js",
+                    "args": [
+                        "leto-marker-router-functions",
+                        "~~routerFunction~~",
+                    ],
+                },
+
+                {   "rule": "insertAfterFinding",
+                    "file": "public/js/main.js",
+                    "args": [
+                        "leto-marker-main-route-list",
+                        "        '~~name~~'                 : '~~name~~'",
+                    ],
+                },
+            ]
+        }
+    ],
+
+    "defaults": {
+        "name": "fubar"
+    }
 }
