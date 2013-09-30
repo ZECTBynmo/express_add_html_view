@@ -16,7 +16,7 @@
             "sourcedir": "leto/templates",
             "templates": [
                 {   "name": "EmptyView", 
-                    "dest": "public/tpl/~~name~~.html"
+                    "dest": "public/tpl/~~name~~View.html"
                 },
                 {   "name": "ViewJS", 
                     "dest": "public/js/views/~~name~~.js"
@@ -29,6 +29,8 @@
 
             "ruleset": "leto/rules.js",
             "changes": [
+
+                // Add a UI side router function to render a view
                 {   "rule": "insertAfterFinding",
                     "file": "public/js/main.js",
                     "args": [
@@ -37,11 +39,48 @@
                     ],
                 },
 
+                // Insert a server side route to our router
+                {   "rule": "insertAfterFinding",
+                    "file": "routes/router.js",
+                    "args": [
+                        "leto-marker-routes",
+                        "~~route~~",
+                    ],
+                },
+
+                // Insert a hook for our UI side router function
                 {   "rule": "insertAfterFinding",
                     "file": "public/js/main.js",
                     "args": [
                         "leto-marker-main-route-list",
-                        "        '~~name~~'                 : '~~name~~'",
+                        "        '~~name~~'                 : '~~name~~',",
+                    ],
+                },
+
+                // Insert a reference to the html template we've generated
+                {   "rule": "insertAfterFinding",
+                    "file": "public/js/main.js",
+                    "args": [
+                        "leto-marker-html-template-list",
+                        "    '~~name~~View',",
+                    ],
+                },
+
+                // Insert a reference to the script we've generated in index.html
+                {   "rule": "insertAfterFinding",
+                    "file": "public/index.html",
+                    "args": [
+                        "leto-marker-index-script-list",
+                        "<script src='js/views/~~name~~.js'></script>",
+                    ],
+                },
+
+                // Insert a server side hook for our new route
+                {   "rule": "insertAfterFinding",
+                    "file": "server.js",
+                    "args": [
+                        "leto-marker-server-routes",
+                        "    app.get( '/~~name~~', router.~~name~~ );",
                     ],
                 },
             ]

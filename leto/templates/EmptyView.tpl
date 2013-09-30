@@ -1,6 +1,6 @@
 <div class="row-fluid">
     <div class="span12">
-        <h4>Hey check it out</h4>
-        <p>This is a view</p>
+        <h4>~~name~~ View</h4>
+        <p>Put stuff about ~~name~~ here</p>
     </div>
 </div>
